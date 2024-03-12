@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: sqlreplicaset
+  namespace: sqldb
+  labels:
+    app: mysql
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql 
+    spec:
+      containers:
+      - name: mysqlcontainer
+        image: 021539915150.dkr.ecr.us-east-1.amazonaws.com/harshclo835-repository-mysql:v1.0  
+        ports:
+        - containerPort: 3306
+          protocol: TCP
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: harsh123
+        - name: MYSQL_DATABASE
+          value: employees  
